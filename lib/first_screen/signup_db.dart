@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'tops_details.dart';
-
+import 'bottoms_details.dart';
 
 class SignupDBPage extends StatelessWidget {
   final String userId;
   const SignupDBPage({super.key, required this.userId});
 
-  // 옷 블록 데이터
-  static const List<Map<String, String>> clothingItems = [
+  // 상의 블록 데이터
+  static const List<Map<String, String>> topsItems = [
     {'label': '긴팔상의', 'imagePath': 'assets/images/long_sleeve.png'},
     {'label': '반팔상의', 'imagePath': 'assets/images/short_sleeve.png'},
     {'label': '셔츠', 'imagePath': 'assets/images/shirt.png'},
     {'label': '민소매', 'imagePath': 'assets/images/sleeveless.png'},
+  ];
+
+  // 하의 블록 데이터
+  static const List<Map<String, String>> bottomsItems = [
+    {'label': '반바지', 'imagePath': 'assets/images/short_pants.png'},
+    {'label': '긴바지', 'imagePath': 'assets/images/long_pants.png'},
+    {'label': '스커트', 'imagePath': 'assets/images/skirts.png'}
   ];
 
   @override
@@ -19,39 +26,117 @@ class SignupDBPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('상의'),
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        elevation: 0, // 그림자 제거
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, // 한 줄에 3개의 블록
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        itemCount: clothingItems.length,
-        itemBuilder: (context, index) {
-          final item = clothingItems[index];
-          return GestureDetector(
-            onTap: () {
-              // 상세 페이지로 이동하며 데이터 전달
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => TopsDetailPage(
-                    label: item['label']!,
-                    imagePath: item['imagePath']!,
-                    userId: userId,
-                  ),
-                  transitionDuration: Duration.zero, // 모션 제거
-                  reverseTransitionDuration: Duration.zero, // 모션 제거
-                ),
-              );
-            },
-            child: buildClothingBlock(item['label']!, item['imagePath']!),
-          );
-        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 질문 텍스트
+            const Text(
+              'Q3. 집에 무슨 옷이 있더라?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // 상의 텍스트
+            const Text(
+              '상의',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            const SizedBox(height: 8),
+
+            // 상의 블록
+            GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              padding: EdgeInsets.zero,
+              itemCount: topsItems.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = topsItems[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            TopsDetailPage(
+                              label: item['label']!,
+                              imagePath: item['imagePath']!,
+                              userId: userId,
+                            ),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
+                  child: buildClothingBlock(item['label']!, item['imagePath']!),
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+
+            // 하의 텍스트
+            const Text(
+              '하의',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            const SizedBox(height: 8),
+
+            // 하의 블록
+            GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              padding: EdgeInsets.zero,
+              itemCount: bottomsItems.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = bottomsItems[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            BottomsDetailPage(
+                              label: item['label']!,
+                              imagePath: item['imagePath']!,
+                              userId: userId,
+                            ),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
+                  child: buildClothingBlock(item['label']!, item['imagePath']!),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -87,3 +172,78 @@ class SignupDBPage extends StatelessWidget {
     );
   }
 }
+
+
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       appBar: AppBar(
+//         backgroundColor: Colors.white,
+//         elevation: 0, // 그림자 제거
+//       ),
+//       body: GridView.builder(
+//         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//           crossAxisCount: 3, // 한 줄에 3개의 블록
+//           crossAxisSpacing: 10,
+//           mainAxisSpacing: 10,
+//         ),
+//         padding: const EdgeInsets.all(30),
+//         itemCount: topsItems.length,
+//         itemBuilder: (context, index) {
+//           final item = topsItems[index];
+//           return GestureDetector(
+//             onTap: () {
+//               // 상세 페이지로 이동하며 데이터 전달
+//               Navigator.push(
+//                 context,
+//                 PageRouteBuilder(
+//                   pageBuilder: (context, animation1, animation2) => TopsDetailPage(
+//                     label: item['label']!,
+//                     imagePath: item['imagePath']!,
+//                     userId: userId,
+//                   ),
+//                   transitionDuration: Duration.zero, // 모션 제거
+//                   reverseTransitionDuration: Duration.zero, // 모션 제거
+//                 ),
+//               );
+//             },
+//             child: buildClothingBlock(item['label']!, item['imagePath']!),
+//           );
+//         },
+//       ),
+//     );
+//   }
+//
+//   Widget buildClothingBlock(String label, String imagePath) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         border: Border.all(color: Colors.grey, width: 0.7),
+//         borderRadius: BorderRadius.circular(15),
+//       ),
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Expanded(
+//             child: Padding(
+//               padding: const EdgeInsets.all(8),
+//               child: Image.asset(
+//                 imagePath,
+//                 fit: BoxFit.contain,
+//               ),
+//             ),
+//           ),
+//           const SizedBox(height:5),
+//           Text(
+//             label,
+//             style: const TextStyle(
+//               fontSize: 15,
+//               fontWeight: FontWeight.bold,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -41,12 +41,12 @@ Future<bool> sendDataToServer(Map<String, dynamic> data, String apiUrl) async {
 }
 
 
-class TopsDetailPage extends StatefulWidget {
+class BottomsDetailPage extends StatefulWidget {
   final String label; // 블록 이름
   final String imagePath; // 블록 이미지
   final String userId;
 
-  const TopsDetailPage({
+  const BottomsDetailPage({
     Key? key,
     required this.label,
     required this.imagePath,
@@ -54,10 +54,10 @@ class TopsDetailPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TopsDetailPageState createState() => _TopsDetailPageState();
+  _BottomsDetailPageState createState() => _BottomsDetailPageState();
 }
 
-class _TopsDetailPageState extends State<TopsDetailPage> {
+class _BottomsDetailPageState extends State<BottomsDetailPage> {
   String selectedColor = '하양'; // 기본 선택 색상
   bool hasPrinting = false; // 프린팅 있음 상태
   bool showColorOptions = false; // 색상 선택 토글 상태
@@ -432,8 +432,8 @@ class _TopsDetailPageState extends State<TopsDetailPage> {
         return Color(0xFFE6E6FA);
       case '골드':
         return Color(0xFFFFD700);
-      // case '네온':
-      //   return Color(0xFF39FF14);
+    // case '네온':
+    //   return Color(0xFF39FF14);
       default:
         return Colors.white;
     }

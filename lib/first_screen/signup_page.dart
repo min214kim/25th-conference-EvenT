@@ -5,14 +5,14 @@ import 'dart:convert';
 import '../../config/constants.dart';
 
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // 서버로 데이터 전송 함수
 Future<bool> sendDataToServer(Map<String, dynamic> data) async {
   // IP 부분
-  final String serverUrl = createUrl('users/signup'); // 백엔드 개발자가 제공한 URL
+  final String serverUrl = createUrl('users/signup'); // 서버연결
 
   try {
     final response = await http.post(
@@ -23,6 +23,7 @@ Future<bool> sendDataToServer(Map<String, dynamic> data) async {
       body: json.encode(data), // 데이터를 JSON으로 변환
     );
 
+    //디버깅
     print("서버 상태 코드: ${response.statusCode}");
     print("서버 응답 본문: ${response.body}");
 
