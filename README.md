@@ -28,7 +28,7 @@
 
 이용자는 스타일 이미지를 보고 저장/호/불호를 선택하는 것을 반복하여, 자신이 좋아하는 스타일을 찾아갑니다. 
 
-이를 위해 저희는 스타일 이미지를 벡터화하여 vectorDB에, 이용자의 선호하는 스타일을 벡터화한 preference vector를 저장합니다. 이후 이용자가 스와이프 서비스를 이용할 때 보여주는 이미지는 vectorDB에서 preference vector와 비슷한 벡터를 추출합니다. 스타일 이미지를 벡터화할 때 [embedding model](model/EmbeddingModel/README.md)에 추가적인 layer를 붙여 학습을 진행한 뒤 이용했습니다.
+이를 위해 저희는 스타일 이미지를 벡터화하여 vectorDB에, 이용자의 선호하는 스타일을 벡터화한 preference vector를 저장합니다. 이후 이용자가 스와이프 서비스를 이용할 때 보여주는 이미지는 vectorDB에서 preference vector와 비슷한 벡터를 추출합니다. 스타일 이미지를 벡터화할 때 embedding model[[README]](model/EmbeddingModel/README.md)에 추가적인 layer를 붙여 학습을 진행한 뒤 이용했습니다.
 
 ---
 ### 2. 개인 옷장 DB
