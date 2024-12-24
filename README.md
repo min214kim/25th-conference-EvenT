@@ -28,7 +28,7 @@
 
 이용자는 스타일 이미지를 보고 저장/호/불호를 선택하는 것을 반복하여, 자신이 좋아하는 스타일을 찾아갑니다. 
 
-이를 위해 저희는 스타일 이미지를 벡터화하여 vectorDB에, 이용자의 선호하는 스타일을 벡터화한 preference vector를 저장합니다. 이후 이용자가 스와이프 서비스를 이용할 때 보여주는 이미지는 vectorDB에서 preference vector와 비슷한 벡터를 추출합니다. 스타일 이미지를 벡터화할 때 embedding model[[README]](model/EmbeddingModel/README.md)에 추가적인 layer를 붙여 학습을 진행한 뒤 이용했습니다.
+이를 위해 저희는 스타일 이미지를 벡터화하여 vectorDB에, 이용자의 선호하는 스타일을 벡터화한 preference vector를 저장합니다. 이후 이용자가 스와이프 서비스를 이용할 때 보여주는 이미지는 vectorDB에서 preference vector와 비슷한 벡터를 추출합니다. 스타일 이미지를 벡터화할 때 embedding model [[README]](model/EmbeddingModel/README.md)에 추가적인 layer를 붙여 학습을 진행한 뒤 이용했습니다.
 
 ---
 ### 2. 개인 옷장 DB
@@ -40,7 +40,7 @@
 간접 DB화는 이용자가 직접 어떤 옷이 있는지 입력하는 방식입니다. 왼쪽 화면을 통해 큰 카테고리의 옷을 고르면, 새로운 창에서 색상과 기장을 고를 수 있습니다. 이 방식을 통해 직접 DB화 방식만을 이용해 옷장 DB를 구축하면 개인 옷장 DB가 구축되는데 시간이 오래 걸리고, 서비스를 잘 활용하기 어렵다는 단점을 해결할 수 있었습니다.
 
 
-직접 DB화는 오른족 화면과 같이, 이용자가 본인의 OOTD 이미지를 올리면 해당 이미지에서 이용자가 입은 옷을 추출하는 방식으로 DB를 구축하는 방식입니다. 이를 위해 YOLO[[README]](model/YOLO/README.md)와 EfficientNet [[README]](model/EfficientNet/README.md) 모델을 K-fashion dataset [[Link]](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=data&dataSetSn=51)을 활용해 fine-tuning을 진행했습니다. 이용자의 이미지가 입력되면, YOLO 모델을 활용해 이용자가 입고 있는 옷의 bounding box를 검출하여 잘라낸 뒤, EfficientNet model을 활용해 해당 bounding box 안에 있는 옷의 속성들을 추출합니다.
+직접 DB화는 오른족 화면과 같이, 이용자가 본인의 OOTD 이미지를 올리면 해당 이미지에서 이용자가 입은 옷을 추출하는 방식으로 DB를 구축하는 방식입니다. 이를 위해 YOLO [[README]](model/YOLO/README.md)와 EfficientNet [[README]](model/EfficientNet/README.md) 모델을 K-fashion dataset [[Link]](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=data&dataSetSn=51)을 활용해 fine-tuning을 진행했습니다. 이용자의 이미지가 입력되면, YOLO 모델을 활용해 이용자가 입고 있는 옷의 bounding box를 검출하여 잘라낸 뒤, EfficientNet model을 활용해 해당 bounding box 안에 있는 옷의 속성들을 추출합니다.
 
 ## 한계 및 추후 과제
 ### 1. 주문 내역을 이용한 옷장 DB 구축
