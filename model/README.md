@@ -2,12 +2,12 @@
 
 # Task1: Clothing Detection
 
-## Abstract
-We trained both [Co-DETR](https://arxiv.org/abs/2211.12860) model and [YOLO](https://docs.ultralytics.com/models/) model. We compared the performance of models, and decided to use ____.
+## Pipeline
+We utilized [YOLO](https://arxiv.org/abs/2410.17725) and [EfficientNet](https://arxiv.org/pdf/1905.11946) model. A 1-stage object detection model was fine-tuned on top of a pre-trained YOLO model that was provided by Ultralytics using the K-Fashion dataset. Another model was trained for multi-task image classification using the EfficientNetB3 architecture. It was fine-tuned on top of a EfficientNetB3 model that was pre-trained on the ImageNet dataset. 
 
 ## Detailed Information on Models
-- [Co-DETR](DETR/README.md)
 - [YOLO](YOLO/README.md)
+- [EfficientNet](EfficientNet/README.md)
 
 ## Dataset
 We used [K-fashion dataset](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=data&dataSetSn=51) to fine-tune our model. This dataset provides segmentation information, overall style, bounding boxes for individual clothing items, and detailed clothing attributes. 
