@@ -5,60 +5,105 @@
 <img src="asset/EvenT_logo.png" alt="logo" width="300"/>
 </div>
 
-## 목차
-- [문제 정의](#문제-정의)
-- [결과 및 주요 기능](#결과-및-주요-기능)
-- [한계 및 추후 과제](#한계-및-추후-과제)
-- [팀 구성](#팀-구성)
+> EvenT is a outfit recommendation service based on digital closet
 
-## 문제 정의
-- 문제점
-    1. 비슷한 옷을 구매하거나, 구매한 후 입지 않고 방치하는 옷이 있음
-    2. 옷을 구매할 때 기준이 명확하지 않아 구매 단계에서 피로감을 느낄 수 있음
-- 해결 방안
-    1. 옷장에 어떠한 옷이 있는지, 즉 옷장 메타인지를 높인다
-    2. 평소 자주 입는 옷 스타일을 파악한다
+## Table of Contents
+- [EvenT](#event)
+  - [Table of Contents](#table-of-contents)
+  - [📍 Problem Definition](#-problem-definition)
+  - [📍 Tech Stack](#-tech-stack)
+    - [AI \& Data](#ai--data)
+    - [Backend \& Database](#backend--database)
+    - [Frontend \& Design](#frontend--design)
+  - [📍 Results and Key Features](#-results-and-key-features)
+    - [1. Style Swipe](#1-style-swipe)
+    - [2. Personal Closet DB](#2-personal-closet-db)
+  - [Limitations and Future Work](#limitations-and-future-work)
+    - [1. Closet DB Construction via Order History](#1-closet-db-construction-via-order-history)
+    - [2. EfficientNet Training Optimization](#2-efficientnet-training-optimization)
+    - [3. Purchase Recommendations](#3-purchase-recommendations)
+  - [Team Composition](#team-composition)
 
-## 결과 및 주요 기능
+## 📍 Problem Definition
+- **Challenges**
+    1. **Inefficient Consumption & Environmental Impact**: Purchasing repetitive styles or leaving clothes unworn leads to textile waste and environmental pollution.
+    2. **Decision Fatigue**: People experience fatigue during the shopping process due to a lack of clear purchasing criteria.
+- **Solutions from EvenT**
+    1. **Enhancing "Closet Meta-cognition"**: Helping users clearly visualize and understand their current inventory to prevent redundant purchases.
+    2. **Style Profiling**: Analyzing frequently worn items and user preferences to define a clear, personalized fashion identity.
 
-### 1. 스와이프
+## 📍 Tech Stack
+
+### AI & Data
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
+![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces?style=for-the-badge)
+![Selenium](https://img.shields.io/badge/-Selenium-%2343B02A?style=for-the-badge&logo=selenium&logoColor=white)
+- **Object Detection**: YOLO v11
+- **Attribute Classification**: EfficientNet-B3
+- **Style Embedding**: FashionSigLIP
+- **Data**: K-Fashion Dataset, Musinsa Snap Crawling (Crawled 18,000+ style images using Selenium and BeautifulSoup)
+
+### Backend & Database
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Pinecone](https://img.shields.io/badge/Pinecone-000000?style=for-the-badge)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+- **Database**: MongoDB 
+- **Vector Search**: Pinecone
+- **Cloud Storage**: AWS S3 (Image hosting)
+
+### Frontend & Design
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+
+
+
+## 📍 Results and Key Features
+
+### 1. Style Swipe
 <p align="center">
   <img src="asset/Swipe.png" alt="Swipe" height="300"/>
 </p>
 
-이용자는 스타일 이미지를 보고 저장/호/불호를 선택하는 것을 반복하여, 자신이 좋아하는 스타일을 찾아갑니다. 
+Users can select "Like/Dislike/Save" while viewing style images to discover their personal preferences.
 
-이를 위해 저희는 스타일 이미지를 벡터화하여 vectorDB에, 이용자의 선호하는 스타일을 벡터화한 preference vector를 저장합니다. 이후 이용자가 스와이프 서비스를 이용할 때 보여주는 이미지는 vectorDB에서 preference vector와 비슷한 벡터를 추출합니다. 스타일 이미지를 벡터화할 때 embedding model [[README]](model/EmbeddingModel/README.md)에 추가적인 layer를 붙여 학습을 진행한 뒤 이용했습니다.
+To achieve this, we vectorized style images into a **VectorDB** and stored a **Preference Vector** that represents the user's preferred style. When a user uses the swipe service, the system extracts images from the VectorDB that are most similar to the user's preference vector. For style image vectorization, we used an **Embedding Model** [[README]](model/EmbeddingModel/README.md) trained with an additional custom layer.
 
 ---
-### 2. 개인 옷장 DB
-이용자가 가지고 있는 옷을 DB화하여 활용합니다. 이 DB를 구축하기 위해 2가지 방법, 간접 DB화와 직접 DB화를 활용합니다.
+
+### 2. Personal Closet DB
+
+EvenT digitizes the user's actual clothing into a database. Two methods are used to build this DB: **Indirect Digitization** and **Direct Digitization**.
+
 <p align="center">
     <img src="asset/indirect_DB.png" alt="indirect_DB" height="300"/>
     <img src="asset/direct_DB.png" alt="direct_DB" height="300"/>
 </p>
-간접 DB화는 이용자가 직접 어떤 옷이 있는지 입력하는 방식입니다. 왼쪽 화면을 통해 큰 카테고리의 옷을 고르면, 새로운 창에서 색상과 기장을 고를 수 있습니다. 이 방식을 통해 직접 DB화 방식만을 이용해 옷장 DB를 구축하면 개인 옷장 DB가 구축되는데 시간이 오래 걸리고, 서비스를 잘 활용하기 어렵다는 단점을 해결할 수 있었습니다.
+
+**Indirect Digitization** allows users to manually input their clothes. By selecting a major category (as seen on the left screen), users can specify color and length in a new window. This method solves the issue where building a DB solely through direct methods might take too long, making it difficult for users to enjoy the service immediately.
+
+**Direct Digitization** (shown on the right screen) builds the DB by extracting clothing items from OOTD (Outfit Of The Day) images uploaded by the user. For this, we fine-tuned **YOLO** [[README]](model/YOLO/README.md) and **EfficientNet** [[README]](model/EfficientNet/README.md) models using the **K-fashion dataset** [[Link]](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=data&dataSetSn=51). When a user uploads an image, the YOLO model detects and crops the bounding boxes for each clothing item, and the EfficientNet model extracts the specific attributes of the clothes within those boxes.
+
+## Limitations and Future Work
 
 
-직접 DB화는 오른족 화면과 같이, 이용자가 본인의 OOTD 이미지를 올리면 해당 이미지에서 이용자가 입은 옷을 추출하는 방식으로 DB를 구축하는 방식입니다. 이를 위해 YOLO [[README]](model/YOLO/README.md)와 EfficientNet [[README]](model/EfficientNet/README.md) 모델을 K-fashion dataset [[Link]](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=data&dataSetSn=51)을 활용해 fine-tuning을 진행했습니다. 이용자의 이미지가 입력되면, YOLO 모델을 활용해 이용자가 입고 있는 옷의 bounding box를 검출하여 잘라낸 뒤, EfficientNet model을 활용해 해당 bounding box 안에 있는 옷의 속성들을 추출합니다.
+### 1. Closet DB Construction via Order History
+We planned a feature where users could upload screenshots of their order history from fashion platforms to be digitized. Although we successfully extracted text, we struggled to accurately identify specific clothing items based on that text. This remains a task for future development.
 
-## 한계 및 추후 과제
-### 1. 주문 내역을 이용한 옷장 DB 구축
-옷 주문 플랫폼의 주문 내역을 캡쳐해서 이용자가 입력하면, 캡쳐본을 이용해 DB화하는 방법을 계획했습니다. 하지만, text 추출까지는 성공했으나 text를 기반으로 정확히 어떤 옷인지 추출하는데 실패했습니다. 따라서 추후 과제로 남겨두었습니다.
+### 2. EfficientNet Training Optimization
+The K-fashion dataset used for training EfficientNet is massive, containing over 1 million images. Handling such a large dataset presented technical challenges, and due to time constraints after troubleshooting, the model was not fully optimized. 
 
-### 2. EfficientNet 학습
-EfficientNet을 학습시킬 때 이용한 K-fashion dataset은 대략 100만 장의 이미지를 포함하는 매우 큰 이미지입니다. 이러한 큰 데이터셋을 다루는데 어려움이 있었고, 여러가지 문제를 해결한 뒤에는 학습 시간이 부족하여 완벽한 학습이 되지 않았습니다. 따라서 
+### 3. Purchase Recommendations
+The goal is to recommend which clothes to buy based on the stored style preferences and existing closet DB. Due to time constraints, we were unable to link this task to the live database. This will be implemented in the future.
 
-### 3. 구매할 옷 추천
-저장한 스타일 이미지와 옷장 DB 정보를 바탕으로, 어떤 옷을 구매하면 좋을지 추천합니다. 이 부분은 시간적 제약으로 인해, DB와 연결하는 데 실패한 task로, 추후 구현할 예정입니다.
+## Team Composition
 
-## 팀 구성
-
-|이름       |팀    |역할                                                                            |
-|----------|-----|-------------------------------------------------------------------------------|
-|최서영(팀장) |DS 25|product manager, YOLO fine-tuning, K-fashion data preprocessing, data crawling |
-|박정양      |DS 24|Embedding model training, YOLO fine-tuning, Model result to DB, data crawling  |
-|정재빈      |DS 25|K-fashion dataset preprocessing, EfficientNet training                         |
-|김민서      |DA 25|UX/UI design, FrontEnd, Data crawling                                          |
-|임도근      |DA 25|FrontEnd - DirectDB, Data Crawling                                             |
-|정이삭      |DE 25|BackEnd, Data Crawling                                                         |
+| Name | Track | Role |
+| :--- | :--- | :--- |
+| **Seoyoung Choi (Lead)** | DS 25 | Product Manager, YOLO Fine-tuning, K-fashion Preprocessing, Data Crawling |
+| **Jungyang Park** | DS 24 | Embedding Model Training, YOLO Fine-tuning, DB Integration, Data Crawling |
+| **Jaebin Jeong** | DS 25 | K-fashion Preprocessing, EfficientNet Training |
+| **Minseo Kim** | DA 25 | Front-End, Data Crawling, UX/UI Design |
+| **Dogeun Lim** | DA 25 | Front-End (Direct DB), Data Crawling |
+| **Isaac Jung** | DE 25 | Back-End, Data Crawling |
